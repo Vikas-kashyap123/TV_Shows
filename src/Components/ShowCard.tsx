@@ -6,10 +6,10 @@ type showCardPros = {
   show: Show;
 };
 
-const ShowCard: FC<showCardPros> = ({ show }) => {
-  const defaultImage =
-    "https://moviereelist.com/wp-content/uploads/2019/07/poster-placeholder.jpg";
+export const defaultImage =
+  "https://moviereelist.com/wp-content/uploads/2019/07/poster-placeholder.jpg";
 
+const ShowCard: FC<showCardPros> = ({ show }) => {
   return (
     <div className="max-w-xs rounded-md shadow-md p-2 m-1">
       <img
