@@ -17,8 +17,8 @@ const showsReducer = (state = initialState, action: Action) => {
       return produce(state, (draft) => {
         const showsArr = action.payload as Show[];
         const showsEntity = new schema.Entity("shows");
-        const data = normalize(showsArr, [showsEntity]);
-        draft.shows = data.entities.shows! || {};
+        const normalizedData = normalize(showsArr, [showsEntity]);
+        draft.shows = normalizedData.entities.shows! || {};
       });
     case SHOWS_QUERY_CHANGE:
       return produce(state, (draft) => {
@@ -28,8 +28,8 @@ const showsReducer = (state = initialState, action: Action) => {
       return produce(state, (draft) => {
         const show = action.payload;
         const showEntity = new schema.Entity("show");
-        const data = normalize(show, showEntity);
-        draft.shows[show.id] = data.entities.show![show.id];
+        const normalizedDetails = normalize(show, showEntity);
+        draft.shows[show.id] = normalizedDetails.entities.show![show.id];
       });
 
     default:

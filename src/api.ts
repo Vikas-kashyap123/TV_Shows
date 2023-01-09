@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Person } from "./models/Person";
 import { Show } from "./models/Show";
 
 export const searchShows = (keyword: string) => {
@@ -9,8 +8,8 @@ export const searchShows = (keyword: string) => {
 };
 
 export const showDetails = (id: number) => {
-  return axios.get("https://api.tvmaze.com/shows/" + id).then((res) => {
-    return res.data;
+  return axios.get("https://api.tvmaze.com/shows/" + id).then((response) => {
+    return response.data;
   });
 };
 
@@ -18,6 +17,6 @@ export const getCasts = (id: number) => {
   return axios
     .get("https://api.tvmaze.com/shows/" + id + "/cast")
     .then((response) => {
-      return response.data.map((item:any) => item.person);
+      return response.data.map((item:any) => item.person)
     });
 };

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Show } from "../models/Show";
+import LoadingSpinner from "./LoadingSpinner";
 
 type showCardPros = {
   show: Show;
@@ -10,6 +11,9 @@ export const defaultImage =
   "https://moviereelist.com/wp-content/uploads/2019/07/poster-placeholder.jpg";
 
 const ShowCard: FC<showCardPros> = ({ show }) => {
+  if (!show) {
+    return <LoadingSpinner />;
+  }
   return (
     <div className="max-w-xs rounded-md shadow-md p-2 m-1">
       <img

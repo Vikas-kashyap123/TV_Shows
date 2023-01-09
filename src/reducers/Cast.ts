@@ -1,9 +1,8 @@
 import { Action } from "../actions";
 import { produce } from "immer";
 import { normalize, schema } from "normalizr";
-import { Cast } from "../models/Cast";
+import { Cast, Person } from "../models/Cast";
 import { CAST_LOADED } from "../actions/Cast";
-import { Person } from "../models/Person";
 
 type normalizeCast = { [personId: number]: Person[] }
 
@@ -16,8 +15,8 @@ const castReducer = (state = initialState, action: Action) => {
       return produce(state, (draft) => {
         const cast = action.payload as Cast;
         const castEntity = new schema.Entity("cast");
-        const data = normalize(cast, [castEntity]);
-        draft.cast = data.entities.cast! || {};
+        const normalizedCast = normalize(cast, [castEntity]);
+        draft.cast = normalizedCast.entities.cast! || {};
       });
     default:
       return state;

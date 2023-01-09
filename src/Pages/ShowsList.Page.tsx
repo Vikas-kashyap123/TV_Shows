@@ -6,6 +6,7 @@ import ShowCard from "../Components/ShowCard";
 import { Show } from "../models/Show";
 import { showsQuerySelector, showsSelector } from "../selectors/Shows";
 import { State } from "../store";
+import Shows from "../assets/Shows.png";
 
 type ShowListPageProps = {
   shows: Show[];
@@ -19,7 +20,7 @@ const ShowListPage: FC<ShowListPageProps> = ({
   showsQueryChange,
 }) => {
   return (
-    <div className="mt-2">
+    <div className="mt-2 mx-4">
       <SearchBar
         value={query}
         onChange={(event) => {
@@ -29,7 +30,11 @@ const ShowListPage: FC<ShowListPageProps> = ({
       <div className="flex flex-wrap justify-center">
         {shows.length < 1 && (
           <div className="sm:text-5xl text-2xl text-red-600 font-bold">
-            Search your Favourite TV Shows
+            <img
+              className="mt-1 object-cover object-center w-full h-screen"
+              src={Shows}
+              alt=""
+            />
           </div>
         )}
         {shows.length > 0 &&
