@@ -14,6 +14,8 @@ const ShowCard: FC<showCardPros> = ({ show }) => {
   if (!show) {
     return <LoadingSpinner />;
   }
+  const newSummary = show.summary;
+  const newStr = newSummary?.replace(/(<([^>]+)>)/gi, "");
   return (
     <div className="max-w-xs rounded-md shadow-md p-2 m-1">
       <img
@@ -24,7 +26,7 @@ const ShowCard: FC<showCardPros> = ({ show }) => {
       <div className="flex flex-col justify-between p-6 space-y-8">
         <div className="space-y-2">
           <h2 className="text-3xl font-semibold tracking-wide">{show.name}</h2>
-          <p>{show.summary}</p>
+          <p>{newStr}</p>
         </div>
         <Link
           to={"/show/" + show.id}
@@ -38,3 +40,6 @@ const ShowCard: FC<showCardPros> = ({ show }) => {
 };
 
 export default ShowCard;
+function remove_filter(summary: string | undefined) {
+  throw new Error("Function not implemented.");
+}

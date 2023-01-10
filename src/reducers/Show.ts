@@ -1,5 +1,3 @@
-
-
 import { produce } from "immer";
 import { normalize, schema } from "normalizr";
 import { Action } from "../actions";
@@ -7,8 +5,13 @@ import { DETAILS_LOADED } from "../actions/Details";
 import { SHOWS_LOADED, SHOWS_QUERY_CHANGE } from "../actions/show";
 import { Show } from "../models/Show";
 
-type normalizeShows = { [showId: number]: Show };
-export type State = { shows: normalizeShows; query: string };
+type normalizeShows = {
+  [showId: number]: Show;
+};
+export type State = {
+  shows: normalizeShows;
+  query: string;
+};
 export const initialState: State = { shows: {}, query: "" };
 
 const showsReducer = (state = initialState, action: Action) => {

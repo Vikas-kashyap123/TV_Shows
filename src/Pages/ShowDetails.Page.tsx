@@ -53,6 +53,9 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
     );
   }
 
+  const newSummary = show.summary;
+  const newStr = newSummary?.replace(/(<([^>]+)>)/gi, "");
+
   return (
     <div className="mt-2 px-2">
       <h2 className="text-4xl font-semibold tracking-wide">{show?.name}</h2>
@@ -75,7 +78,7 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
           className="object-cover object-center w-full rounded-t-md h-72"
         />
         <div className="ml-2">
-          <p>{show?.summary}</p>
+          <p>{newStr}</p>
           <p className="mt-2 text-lg font-bold border border-gray-700 rounded-md px-2 py-1 max-w-max">
             Rating:
             <span className="text-gray-700">
