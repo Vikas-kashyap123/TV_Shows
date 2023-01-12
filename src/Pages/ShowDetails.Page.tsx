@@ -5,47 +5,31 @@ import GenrePill from "../Components/GenrePill";
 import withRouter, { WithRouterProps } from "../hocs/withRouter";
 import { BiArrowBack } from "react-icons/bi";
 import { State } from "../store";
-import { connect } from "react-redux/es/exports";
+import { connect, ConnectedProps } from "react-redux/es/exports";
 import { LoadingDetailsAction } from "../actions/Details";
 import { LoadCastAction } from "../actions/Cast";
 import { castSelector } from "../selectors/Cast";
-import { showsMapSelector } from "../selectors/Shows";
-import { Show } from "../models/Show";
-import { Cast } from "../models/Cast";
+import { showLoadingSelector, showsMapSelector } from "../selectors/Shows";
+import { Person } from "../models/Cast";
 import { defaultImage } from "../Components/ShowCard";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
-type ShowDetailPageProps = {
-  loading: any;
-  setLoading: Function;
-  show: Show;
-  cast: Cast;
-  loadDetails: (id: number) => void;
-  loadCast: (id: number) => void;
-} & WithRouterProps;
+type ownProps = { cast: Person[] } & WithRouterProps;
+
+type ShowDetailPageProps = ownProps & ReduxProps;
 
 const ShowDetailPage: FC<ShowDetailPageProps> = ({
-  params,
   show,
   cast,
+  id,
   loadDetails,
+  loading,
   loadCast,
 }) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(true);
-  const id = +params.show_id;
-  console.log("cast", cast);
-
   useEffect(() => {
     loadDetails(id);
     loadCast(id);
-    setError(false);
-    setLoading(false);
   }, [id]);
-
-  if (error) {
-    return <div>Error 404</div>;
-  }
 
   if (loading) {
     return (
@@ -53,8 +37,8 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
     );
   }
 
-  const newSummary = show.summary;
-  const newStr = newSummary?.replace(/(<([^>]+)>)/gi, "");
+  const Summary = show?.summary;
+  const newStr = Summary?.replace(/(<([^>]+)>)/gi, "");
 
   return (
     <div className="mt-2 px-2">
@@ -78,7 +62,7 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
           className="object-cover object-center w-full rounded-t-md h-72"
         />
         <div className="ml-2">
-          <p>{newStr}</p>
+          <p>{newStr || Summary}</p>
           <p className="mt-2 text-lg font-bold border border-gray-700 rounded-md px-2 py-1 max-w-max">
             Rating:
             <span className="text-gray-700">
@@ -102,7 +86,7 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
               );
             })
           ) : (
-            <div className="text-xl font-bold">No Cast avilable</div>
+            <div className="text-xl font-bold">No Cast available</div>
           )}
         </div>
       </div>
@@ -110,12 +94,14 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
   );
 };
 
-const mapStateToProps = (state: State, ownProps: any) => {
+const mapStateToProps = (state: State, ownProps: ownProps) => {
   const showId = +ownProps.params.show_id;
 
   return {
+    id: showId,
     show: showsMapSelector(state)[showId],
     cast: castSelector(state),
+    loading: showLoadingSelector(state),
   };
 };
 const mapDispatchToProps = {
@@ -123,6 +109,8 @@ const mapDispatchToProps = {
   loadCast: LoadCastAction,
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(memo(ShowDetailPage as any))
-);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default withRouter(connector(ShowDetailPage as any));

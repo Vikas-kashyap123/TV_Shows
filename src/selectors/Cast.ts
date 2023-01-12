@@ -8,6 +8,11 @@ export const castMapSelector = createSelector(
   (castState) => castState.cast
 );
 
+export const castLoadingSelector = createSelector(
+  castSateSelector,
+  (cast) => cast.loading
+);
+
 export const castSelector = createSelector(castMapSelector, (normalize) =>
   Object.keys(normalize).map((castId) => normalize[+castId])
 );

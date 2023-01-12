@@ -8,6 +8,12 @@ export const ShowsLoadedAction: ActionCreator<Show[]> = (shows: Show[]) => ({
   payload: shows,
 });
 
+export const SHOWS_lOADING = "SHOWS_lOADING"
+
+export const ShowsLoadingAction: ActionCreator = ()=> ({
+  type: SHOWS_lOADING,
+})
+
 export const SHOWS_QUERY_CHANGE= "SHOWS_QUERY_CHANGE";
 
 export const ShowsQueryChangeAction: ActionCreator<string> = (query:string) => ({

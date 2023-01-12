@@ -1,43 +1,50 @@
 import { FC } from "react";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { ShowsQueryChangeAction } from "../actions/show";
 import SearchBar from "../Components/SearchBar";
 import ShowCard from "../Components/ShowCard";
-import { Show } from "../models/Show";
-import { showsQuerySelector, showsSelector } from "../selectors/Shows";
+import {
+  showLoadingSelector,
+  showsQuerySelector,
+  showsSelector,
+} from "../selectors/Shows";
 import { State } from "../store";
-import Shows from "../assets/Shows.png";
+import ShowsImage from "../assets/ShowsImage.png";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
-type ShowListPageProps = {
-  shows: Show[];
-  query: string;
-  showsQueryChange: (query: string) => void;
-};
+type ShowListPageProps = {} & ReduxProps;
 
 const ShowListPage: FC<ShowListPageProps> = ({
   query,
   shows,
   showsQueryChange,
+  loading,
 }) => {
   return (
     <div className="mt-2 mx-4">
-      <SearchBar
-        value={query}
-        onChange={(event) => {
-          showsQueryChange(event.target.value);
-        }}
-      />
+      <div className="flex justify-between ">
+        <SearchBar
+          className="w-2/3"
+          value={query}
+          onChange={(event) => {
+            showsQueryChange(event.target.value);
+          }}
+        />
+        {loading && (
+          <LoadingSpinner className="text-2xl text-red-500 font-bold" />
+        )}
+      </div>
       <div className="flex flex-wrap justify-center">
-        {shows.length < 1 && (
+        {!shows && (
           <div className="sm:text-5xl text-2xl text-red-600 font-bold">
             <img
               className="mt-1 object-cover object-center w-full h-screen"
-              src={Shows}
+              src={ShowsImage}
               alt=""
             />
           </div>
         )}
-        {shows.length > 0 &&
+        {shows &&
           shows.map((element) => <ShowCard key={element.id} show={element} />)}
       </div>
     </div>
@@ -45,11 +52,19 @@ const ShowListPage: FC<ShowListPageProps> = ({
 };
 
 const mapStateToProps = (state: State) => {
-  return { query: showsQuerySelector(state), shows: showsSelector(state) };
+  return {
+    query: showsQuerySelector(state),
+    shows: showsSelector(state),
+    loading: showLoadingSelector(state),
+  };
 };
 
 const mapDispatchToProps = {
   showsQueryChange: ShowsQueryChangeAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowListPage);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(ShowListPage);

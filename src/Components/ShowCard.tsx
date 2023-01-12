@@ -14,7 +14,7 @@ const ShowCard: FC<showCardPros> = ({ show }) => {
   if (!show) {
     return <LoadingSpinner />;
   }
-  const newSummary = show.summary;
+  const newSummary = show?.summary;
   const newStr = newSummary?.replace(/(<([^>]+)>)/gi, "");
   return (
     <div className="max-w-xs rounded-md shadow-md p-2 m-1">
