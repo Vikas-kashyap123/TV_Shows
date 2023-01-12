@@ -14,7 +14,7 @@ import { Person } from "../models/Cast";
 import { defaultImage } from "../Components/ShowCard";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
-type ownProps = { cast: Person[] } & WithRouterProps;
+type ownProps = {} & WithRouterProps;
 
 type ShowDetailPageProps = ownProps & ReduxProps;
 

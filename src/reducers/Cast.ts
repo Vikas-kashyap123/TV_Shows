@@ -4,9 +4,10 @@ import { normalize, schema } from "normalizr";
 import { Cast, Person } from "../models/Cast";
 import { CAST_LOADED, LOAD_CAST } from "../actions/Cast";
 
-type normalizeCast = { [personId: number]: Person[] }
+type normalizeCast = { [personId: number]: Person }
 
 export type State = { cast: normalizeCast, loading: boolean };
+
 export const initialState: State = { cast: {}, loading: false };
 
 const castReducer = (state = initialState, action: Action) => {
