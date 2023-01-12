@@ -38,7 +38,7 @@ const ShowListPage: FC<ShowListPageProps> = ({
         {!shows && (
           <div className="sm:text-5xl text-2xl text-red-600 font-bold">
             <img
-              className="mt-1 object-cover object-center w-full h-screen"
+              className="mt-1 object-cover object-center w-screen h-screen"
               src={ShowsImage}
               alt=""
             />
