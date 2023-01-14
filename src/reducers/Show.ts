@@ -13,14 +13,14 @@ export type State = {
   query_shows: { [query: string]: number[] };
   query: string;
   loading: boolean;
-  show_loading: {[showId: number]: boolean}
+  show_loading: { [showId: number]: boolean };
 };
 export const initialState: State = {
   shows: {},
   query: "",
   loading: false,
   query_shows: {},
-  show_loading: {}
+  show_loading: {},
 };
 
 const showsReducer = (state = initialState, action: Action) => {
@@ -29,7 +29,7 @@ const showsReducer = (state = initialState, action: Action) => {
       return produce(state, (draft) => {
         const shows = action.payload as Show[];
 
-        if(!shows || shows.length === 0 ){
+        if (!shows || shows.length === 0) {
           return;
         }
 
@@ -44,6 +44,9 @@ const showsReducer = (state = initialState, action: Action) => {
       return produce(state, (draft) => {
         draft.query = action.payload as string;
         draft.loading = true;
+        if (draft.query == "") {
+          draft.loading = false;
+        }
       });
     case DETAILS_LOADED:
       return produce(state, (draft) => {
