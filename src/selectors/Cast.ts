@@ -3,10 +3,9 @@ import { createSelector } from "reselect";
 
 export const castSateSelector = (state: State) => state.cast;
 
-export const castMapSelector = createSelector(
-  castSateSelector,
-  (castState) => castState.cast
-);
+export const castMapSelector = createSelector(castSateSelector, (castState) => {
+  return castState.cast;
+});
 
 export const castLoadingSelector = createSelector(
   castSateSelector,

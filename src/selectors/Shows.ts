@@ -21,7 +21,6 @@ export const showsMapSelector = createSelector(
 export const queryShowsMapSelector = createSelector(
   showsStateSelector,
   (showsState) => showsState.query_shows
-  
 );
 
 export const showsSelector = createSelector(
@@ -29,5 +28,5 @@ export const showsSelector = createSelector(
   showsQuerySelector,
   queryShowsMapSelector,
   (showsMap, query, queryShowMap) =>
-     queryShowMap[query]?.map((showId) => showsMap[showId])
+    queryShowMap[query]?.map((showId) => showsMap[showId])
 );

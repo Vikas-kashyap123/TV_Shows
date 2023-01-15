@@ -11,6 +11,7 @@ import {
 import { State } from "../store";
 import ShowsImage from "../assets/ShowsImage.png";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import { castMapSelector } from "../selectors/Cast";
 
 type ShowListPageProps = {} & ReduxProps;
 
@@ -19,6 +20,7 @@ const ShowListPage: FC<ShowListPageProps> = ({
   shows,
   showsQueryChange,
   loading,
+  castMap,
 }) => {
   return (
     <div className="mt-2 mx-4">
@@ -45,7 +47,15 @@ const ShowListPage: FC<ShowListPageProps> = ({
           </div>
         )}
         {shows &&
-          shows.map((element) => <ShowCard key={element.id} show={element} />)}
+          shows.map((element) => {
+            return (
+              <ShowCard
+                key={element.id}
+                show={element}
+                cast={castMap[element.id]}
+              />
+            );
+          })}
       </div>
     </div>
   );
@@ -56,6 +66,7 @@ const mapStateToProps = (state: State) => {
     query: showsQuerySelector(state),
     shows: showsSelector(state),
     loading: showLoadingSelector(state),
+    castMap: castMapSelector(state),
   };
 };
 

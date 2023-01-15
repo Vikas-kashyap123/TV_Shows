@@ -27,7 +27,7 @@ const showsReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case SHOWS_LOADED:
       return produce(state, (draft) => {
-        const shows = action.payload as Show[];
+        const shows = action.payload.map((item: any) => item.show) as Show[];
 
         if (!shows || shows.length === 0) {
           return;
@@ -44,9 +44,6 @@ const showsReducer = (state = initialState, action: Action) => {
       return produce(state, (draft) => {
         draft.query = action.payload as string;
         draft.loading = true;
-        if (draft.query == "") {
-          draft.loading = false;
-        }
       });
     case DETAILS_LOADED:
       return produce(state, (draft) => {

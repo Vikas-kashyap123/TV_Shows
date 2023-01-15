@@ -1,45 +1,63 @@
-import { FC } from "react";
+import { Avatar, AvatarGroup } from "@mui/material";
+import { FC, memo, useState } from "react";
 import { Link } from "react-router-dom";
+import { Person } from "../models/Cast";
 import { Show } from "../models/Show";
-import LoadingSpinner from "./LoadingSpinner";
+import { ShowCast } from "../models/ShowCast";
+import CastDropDown from "./CastDropdown";
 
-type showCardPros = {
-  show: Show;
-};
-
+type ShowCardProps = { show: Show; cast: any };
 export const defaultImage =
-  "https://moviereelist.com/wp-content/uploads/2019/07/poster-placeholder.jpg";
+  "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
+const ShowCard: FC<ShowCardProps> = ({ show, cast }) => {
+  const [avtarShow, setAvtarShow] = useState(false);
 
-const ShowCard: FC<showCardPros> = ({ show }) => {
-  if (!show) {
-    return <LoadingSpinner />;
-  }
-  const newSummary = show?.summary;
-  const newStr = newSummary?.replace(/(<([^>]+)>)/gi, "");
   return (
-    <div className="max-w-xs rounded-md shadow-md p-2 m-1">
+    <div className="max-w-xs rounded-md shadow-md p-2 m-1 relative">
       <img
-        src={show.image?.medium || show.image?.original || defaultImage}
+        src={show.image?.medium || defaultImage}
         alt=""
         className="object-cover object-center w-full rounded-t-md h-72"
       />
       <div className="flex flex-col justify-between p-6 space-y-8">
         <div className="space-y-2">
           <h2 className="text-3xl font-semibold tracking-wide">{show.name}</h2>
-          <p>{newStr}</p>
+          <p
+            dangerouslySetInnerHTML={{ __html: show?.summary || "" }}
+            className="h-36 overflow-y-hidden"
+          ></p>
         </div>
         <Link
           to={"/show/" + show.id}
-          className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md"
+          className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md text-xl bg-gray-400 hover:bg-black hover:text-white"
         >
           View Details
         </Link>
+        <div className="flex flex-col items-center gap-4 ">
+          <h3 className="text-2xl font-semibold">Cast</h3>
+          <div className="cursor-pointer">
+            <AvatarGroup
+              max={4}
+              total={5}
+              onClick={() => setAvtarShow(!avtarShow)}
+            >
+              {cast.person?.map((p: Person) => {
+                return <Avatar key={p.id} alt="" src={p.image?.medium} />;
+              })}
+            </AvatarGroup>
+          </div>
+          {avtarShow && (
+            <CastDropDown
+              persons={cast?.person}
+              className={` ${
+                avtarShow ? "bottom-20" : "bottom-[-100%]"
+              } + " absolute md:left-52 left-44 bottom-20 duration-300 "`}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default ShowCard;
-function remove_filter(summary: string | undefined) {
-  throw new Error("Function not implemented.");
-}
+export default memo(ShowCard);

@@ -1,11 +1,10 @@
-
 export type Person = {
-    id: number;
-    image?: {
-        medium: string;
-        original: string;
-    };
-    name: string
-}
+  id: number;
+  name: string;
+  image: {
+    medium: string;
+    original: string;
+  };
+};
 
-export type Cast = Person[]
+export type Cast = Person[];

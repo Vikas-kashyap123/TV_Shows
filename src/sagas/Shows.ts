@@ -7,7 +7,6 @@ import { getCasts, searchShows, showDetails } from "../api";
 export function* fetchShows(action: Action): Generator<any, any, any> {
   const shows = yield call(searchShows, action.payload);
   yield put(ShowsLoadedAction(shows));
-  console.log("shows", shows);
 }
 
 export function* fetchDetails(action: Action): Generator<any, any, any> {
