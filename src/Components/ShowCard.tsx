@@ -29,7 +29,7 @@ const ShowCard: FC<ShowCardProps> = ({ show, cast }) => {
         </div>
         <Link
           to={"/show/" + show.id}
-          className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md text-xl bg-gray-400 hover:bg-black hover:text-white"
+          className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md text-xl bg-slate-600 hover:bg-black hover:text-white"
         >
           View Details
         </Link>
@@ -38,7 +38,7 @@ const ShowCard: FC<ShowCardProps> = ({ show, cast }) => {
           <div className="cursor-pointer">
             <AvatarGroup
               max={4}
-              total={5}
+              total={cast.person?.length}
               onClick={() => setAvtarShow(!avtarShow)}
             >
               {cast.person?.map((p: Person) => {
