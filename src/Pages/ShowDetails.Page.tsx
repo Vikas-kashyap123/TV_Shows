@@ -10,7 +10,6 @@ import { LoadingDetailsAction } from "../actions/Details";
 import { LoadCastAction } from "../actions/Cast";
 import { castSelector } from "../selectors/Cast";
 import { showLoadingSelector, showsMapSelector } from "../selectors/Shows";
-import { Person } from "../models/Cast";
 import { defaultImage } from "../Components/ShowCard";
 import LoadingSpinner from "../Components/LoadingSpinner";
 

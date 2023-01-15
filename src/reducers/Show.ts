@@ -38,6 +38,9 @@ const showsReducer = (state = initialState, action: Action) => {
         draft.query_shows[draft.query] = normalizedData.result;
 
         draft.shows = { ...draft.shows, ...normalizedData.entities.shows };
+        if (draft.query == "") {
+          draft.loading = false;
+        }
         draft.loading = false;
       });
     case SHOWS_QUERY_CHANGE:

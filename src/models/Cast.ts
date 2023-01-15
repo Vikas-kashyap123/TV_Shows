@@ -7,4 +7,4 @@ export type Person = {
   };
 };
 
-export type Cast = Person[];
+export type Cast = { person: Person[]; id: number };

@@ -1,12 +1,11 @@
 import { Avatar, AvatarGroup } from "@mui/material";
 import { FC, memo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Person } from "../models/Cast";
+import { Cast, Person } from "../models/Cast";
 import { Show } from "../models/Show";
-import { ShowCast } from "../models/ShowCast";
 import CastDropDown from "./CastDropdown";
 
-type ShowCardProps = { show: Show; cast: any };
+type ShowCardProps = { show: Show; cast: Cast };
 export const defaultImage =
   "https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
 const ShowCard: FC<ShowCardProps> = ({ show, cast }) => {
